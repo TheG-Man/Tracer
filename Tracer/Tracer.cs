@@ -26,12 +26,12 @@ namespace Tracer
             StackFrame stackFrame = stackTrace.GetFrame(0);
             MethodBase method = stackFrame.GetMethod();
 
-            traceResult.AddTracedMethod(method);
+            traceResult.AddMethodToTrace(method);
         }
 
         public void StopTrace()
         {
-            throw new NotImplementedException();
+            traceResult.StopTrace();
         }
 
         public TraceResult GetTraceResult()

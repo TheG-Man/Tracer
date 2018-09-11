@@ -12,7 +12,7 @@ namespace Tracer
         private readonly List<TracedMethod> tracedMethods;
         private readonly Stack<TracedMethod> stack;
 
-        private void AddTracedMethod(MethodBase method)
+        private void AddMethodToTrace(MethodBase method)
         {
             if (stack.Count == 0)
             {
@@ -44,7 +44,7 @@ namespace Tracer
 
         public static TracedThread operator+(TracedThread lhs, MethodBase rhs)
         {
-            lhs.AddTracedMethod(rhs);
+            lhs.AddMethodToTrace(rhs);
             return lhs;
         }
 

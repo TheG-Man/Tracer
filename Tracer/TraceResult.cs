@@ -19,7 +19,7 @@ namespace Tracer
             tracedThreads = new ConcurrentDictionary<int, TracedThread>();
         }
 
-        internal void AddTracedMethod(MethodBase method)
+        internal void AddMethodToTrace(MethodBase method)
         {
             TracedThread tracedThread = tracedThreads.GetOrAdd(Thread.CurrentThread.ManagedThreadId, new TracedThread());
             tracedThread += method;
