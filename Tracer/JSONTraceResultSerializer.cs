@@ -24,7 +24,7 @@ namespace Tracer
 
                 foreach (TracedMethod tracedMethod in tracedThread.Value.TracedMethods)
                 {
-                    thread.Add("methods", CreateMethodElement(tracedMethod));
+                    thread.Add("methods", CreateMethodsElement(tracedMethod));
                 }
 
                 root.Add(thread);
@@ -38,7 +38,7 @@ namespace Tracer
             return outStream;
         }
 
-        private JObject CreateMethodElement(TracedMethod tracedMethod)
+        private JObject CreateMethodsElement(TracedMethod tracedMethod)
         {
             var method = new JObject();
 
@@ -46,10 +46,13 @@ namespace Tracer
             method.Add("class", new JValue(tracedMethod.ClassName));
             method.Add("time", new JValue(tracedMethod.ExecutionTime));
 
+            var methods = new JArray();
             foreach (TracedMethod tracedNestedMethod in tracedMethod.NestedMethods)
             {
-                method.Add("method", CreateMethodElement(tracedNestedMethod));
+                methods.Add(CreateMethodsElement(tracedNestedMethod));
             }
+
+            method.Add("methods", methods);
 
             return method;
         }
