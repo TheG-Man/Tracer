@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Reflection;
-using System.Diagnostics;
 
 namespace Tracer
 {
@@ -22,11 +20,7 @@ namespace Tracer
 
         public void StartTrace()
         {
-            var stackTrace = new StackTrace(1);
-            StackFrame stackFrame = stackTrace.GetFrame(0);
-            MethodBase method = stackFrame.GetMethod();
-
-            traceResult.AddMethodToTrace(method);
+            traceResult.StartTrace();
         }
 
         public void StopTrace()
