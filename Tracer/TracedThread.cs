@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Reflection;
 
@@ -11,24 +12,29 @@ namespace Tracer
     {
         private readonly List<TracedMethod> tracedMethods;
         private readonly Stack<TracedMethod> stack;
+        
+        internal long ExecutionTime => tracedMethods.Select(tracedMethod => tracedMethod.ExecutionTime).Sum();
 
         private void AddMethodToTrace(MethodBase method)
         {
+            var tracedMethod = new TracedMethod(method);
+
             if (stack.Count == 0)
             {
-                tracedMethods.Add(new TracedMethod(method));
+                tracedMethods.Add(tracedMethod);
             }
             else
             {
-                stack.Peek().AddNestedMethod(method);
+                stack.Peek().AddNestedMethod(tracedMethod);
             }
 
-            stack.Push(new TracedMethod(method));        
+            stack.Push(tracedMethod);        
         }
 
         internal TracedThread()
         {
             tracedMethods = new List<TracedMethod>();
+            stack = new Stack<TracedMethod>();
         }
 
         internal void StopTrace()
@@ -48,5 +54,6 @@ namespace Tracer
             return lhs;
         }
 
+        internal IEnumerable<TracedMethod> TracedMethods => tracedMethods;
     }
 }
