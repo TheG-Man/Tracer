@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Diagnostics;
 using System.Threading;
 using System.Linq;
 using System.Text;
-
 
 namespace Tracer
 {
@@ -19,8 +19,12 @@ namespace Tracer
             tracedThreads = new ConcurrentDictionary<int, TracedThread>();
         }
 
-        internal void AddMethodToTrace(MethodBase method)
+        internal void StartTrace()
         {
+            var stackTrace = new StackTrace(2);
+            StackFrame stackFrame = stackTrace.GetFrame(0);
+            MethodBase method = stackFrame.GetMethod();
+
             TracedThread tracedThread = tracedThreads.GetOrAdd(Thread.CurrentThread.ManagedThreadId, new TracedThread());
             tracedThread += method;
         }
@@ -34,7 +38,7 @@ namespace Tracer
             {
                 throw new ArgumentException("There is not a thread " + threadId);
             }
-
+            
             tracedThread.StopTrace();
         }
 
