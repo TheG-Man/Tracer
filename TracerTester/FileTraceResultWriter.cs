@@ -18,20 +18,10 @@ namespace Tracer
 
         public void Write(MemoryStream stream)
         {
-            var fileStream = new FileStream(fileName, FileMode.Create);
-
-            try
+            using (var fileStream = new FileStream(fileName, FileMode.Create))
             {
                 stream.Position = 0;
                 stream.CopyTo(fileStream);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                fileStream.Close();
             }
         }
     }
