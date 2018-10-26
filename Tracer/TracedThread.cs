@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Tracer
 {
-    class TracedThread
+    public class TracedThread
     {
         private readonly List<TracedMethod> tracedMethods;
         private readonly Stack<TracedMethod> stack;
@@ -54,6 +54,6 @@ namespace Tracer
             return lhs;
         }
 
-        internal IEnumerable<TracedMethod> TracedMethods => tracedMethods;
+        public IEnumerable<TracedMethod> TracedMethods => tracedMethods;
     }
 }
