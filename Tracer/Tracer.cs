@@ -10,7 +10,7 @@ namespace Tracer
     {
         private readonly TraceResult traceResult;
 
-        private static volatile Tracer instance = null;
+        private static volatile Tracer instance;
         private static readonly object syncRoot = new object();
 
         private Tracer()
