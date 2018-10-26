@@ -17,10 +17,11 @@ namespace Tracer
 
             foreach (KeyValuePair<int, TracedThread> tracedThread in traceResult.TracedThreads)
             {
-                var thread = new JObject();
-
-                thread.Add("id", new JValue(tracedThread.Key));
-                thread.Add("time", new JValue(tracedThread.Value.ExecutionTime));
+                var thread = new JObject
+                {
+                    { "id", new JValue(tracedThread.Key) },
+                    { "time", new JValue(tracedThread.Value.ExecutionTime) }
+                };
 
                 foreach (TracedMethod tracedMethod in tracedThread.Value.TracedMethods)
                 {
@@ -32,7 +33,7 @@ namespace Tracer
 
             jsonTree.Add("threads", root);
 
-            String json = jsonTree.ToString();
+            string json = jsonTree.ToString();
             outStream.Write(Encoding.ASCII.GetBytes(json), 0, json.Length);
 
             return outStream;
@@ -40,11 +41,12 @@ namespace Tracer
 
         private JObject CreateMethodsElement(TracedMethod tracedMethod)
         {
-            var method = new JObject();
-
-            method.Add("name", new JValue(tracedMethod.Name));
-            method.Add("class", new JValue(tracedMethod.ClassName));
-            method.Add("time", new JValue(tracedMethod.ExecutionTime));
+            var method = new JObject
+            {
+                { "name", new JValue(tracedMethod.Name) },
+                { "class", new JValue(tracedMethod.ClassName) },
+                { "time", new JValue(tracedMethod.ExecutionTime) }
+            };
 
             var methods = new JArray();
             foreach (TracedMethod tracedNestedMethod in tracedMethod.NestedMethods)
