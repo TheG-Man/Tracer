@@ -19,7 +19,7 @@ namespace TracerTester
             var threads = new List<Thread>();
             for (int i = 0; i < 4; ++i)
             {
-                var thread = new Thread(doSmth);
+                var thread = new Thread(DoSmth);
                 threads.Add(thread);
                 thread.Start();
             }
@@ -32,7 +32,7 @@ namespace TracerTester
             PrintTraceResult();
         }
 
-        static void doSmth()
+        static void DoSmth()
         {
             tracer.StartTrace();
 
@@ -46,7 +46,7 @@ namespace TracerTester
         {
             var stream = new MemoryStream();
             ITraceResultSerializer traceResultSerializer;
-            traceResultSerializer = new XMLTraceResultSerializer();
+            traceResultSerializer = new JSONTraceResultSerializer();
             traceResultSerializer.Serialize(stream, tracer.GetTraceResult());
             var traceResultWriter = new ConsoleTraceResultWriter();
 
