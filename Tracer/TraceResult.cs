@@ -21,7 +21,7 @@ namespace Tracer
 
         internal void StartTrace()
         {
-            var stackTrace = new StackTrace(2);
+            var stackTrace = new StackTrace(skipFrames: 2);
             StackFrame stackFrame = stackTrace.GetFrame(0);
             MethodBase method = stackFrame.GetMethod();
 
@@ -42,6 +42,6 @@ namespace Tracer
             tracedThread.StopTrace();
         }
 
-        internal IEnumerable<KeyValuePair<int, TracedThread>> TracedThreads => tracedThreads;
+        public IEnumerable<KeyValuePair<int, TracedThread>> TracedThreads => tracedThreads;
     }
 }
