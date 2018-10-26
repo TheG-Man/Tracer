@@ -10,14 +10,14 @@ using System.Runtime.Serialization.Json;
 
 namespace Tracer
 {
-    class TracedMethod
+    public class TracedMethod
     {
         private readonly List<TracedMethod> nestedMethods;
         private readonly Stopwatch stopwatch;
 
-        internal string Name { get; }
-        internal string ClassName { get; }
-        internal long ExecutionTime => stopwatch.ElapsedMilliseconds;
+        public string Name { get; }
+        public string ClassName { get; }
+        public long ExecutionTime => stopwatch.ElapsedMilliseconds;
 
         internal TracedMethod(MethodBase method)
         {
